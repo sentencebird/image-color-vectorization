@@ -1,7 +1,6 @@
 import streamlit as st
 from PIL import Image, ImageOps
 import cv2
-import io
 import numpy as np
 import random
 import time
@@ -57,9 +56,10 @@ if uploaded_file is None: uploaded_file = './sample.jpg'
 
 if uploaded_file is not None:
     im = Image.open(uploaded_file)
+    im.thumbnail((1000, 1000),resample=Image.BICUBIC) # resize    
     st.image(im, caption='Original')
 
-    im_gray = np.array(Image.open(uploaded_file).convert('L'))
+    im_gray = np.array(im.convert('L'))
     thresh, _img = cv2.threshold(im_gray, 0, 255, cv2.THRESH_OTSU)
     
     n_rows, n_cols = st.number_input('Rows', value=3), st.number_input('Columns', value=3)
