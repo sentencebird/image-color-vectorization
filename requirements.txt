@@ -1,4 +1,4 @@
-streamlit==0.76.0
+streamlit==0.82.0
 Pillow
 opencv-python
 seaborn
