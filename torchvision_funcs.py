@@ -1,10 +1,12 @@
 import numpy as np
 import cv2
 from PIL import Image
+import pickle
 
 import torch
 import torchvision
 from torchvision import transforms
+
 
 def deeplabv3_remove_bg(img):
     img = np.array(img, dtype=np.uint8)
@@ -14,10 +16,8 @@ def deeplabv3_remove_bg(img):
     # img = cv2.resize(img,(1000,1000))
     
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-    model = torchvision.models.segmentation.deeplabv3_resnet101(pretrained=True)
-    model = model.to(device)
-    model.eval();
+    with open('deeplabv3_resnet101.pkl', 'rb') as f:
+        model = pickle.load(f)
     
     preprocess = transforms.Compose([
     transforms.ToTensor(),
