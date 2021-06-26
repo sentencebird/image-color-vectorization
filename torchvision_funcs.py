@@ -32,6 +32,7 @@ def deeplabv3_remove_bg(img):
     
     with torch.no_grad():
         output = model(input_batch)['out'][0]
+        del model
     output = output.argmax(0)
     mask = output.byte().cpu().numpy()
     # mask = cv2.resize(mask,(w,h))
