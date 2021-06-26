@@ -1,7 +1,9 @@
+import os
 import numpy as np
 import cv2
 from PIL import Image
 import pickle
+from google_drive_downloader import GoogleDriveDownloader as gdd
 
 import torch
 import torchvision
@@ -16,6 +18,7 @@ def deeplabv3_remove_bg(img):
     # img = cv2.resize(img,(1000,1000))
     
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    gdd.download_file_from_google_drive(file_id=os.environ['MODEL_ID'], dest_path='./deeplabv3_resnet101.pkl')
     with open('deeplabv3_resnet101.pkl', 'rb') as f:
         model = pickle.load(f)
     
