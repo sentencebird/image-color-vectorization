@@ -18,11 +18,15 @@ def deeplabv3_remove_bg(img):
     # img = cv2.resize(img,(1000,1000))
     
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    if not os.path.exists('/tmp/deeplabv3_resnet101.pkl'):
-        gdd.download_file_from_google_drive(file_id=os.environ['MODEL_ID'], dest_path='/tmp/deeplabv3_resnet101.pkl')
-    with open('/tmp/deeplabv3_resnet101.pkl', 'rb') as f:
-        model = pickle.load(f)
-    
+    # if not os.path.exists('./deeplabv3_resnet101.pkl'):
+    #     gdd.download_file_from_google_drive(file_id=os.environ['MODEL_ID'], dest_path='/tmp/deeplabv3_resnet101.pkl')
+    # with open('./deeplabv3_resnet101.pkl', 'rb') as f:
+    #     model = pickle.load(f)
+    model = torchvision.models.segmentation.deeplabv3_resnet101(
+        pretrained=True)
+    model = model.to(device)
+    model.eval()
+
     preprocess = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
