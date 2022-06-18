@@ -27,6 +27,11 @@ def remove_image_background(image):
 title = 'Andy Warhol like Image Generator'
 st.set_page_config(page_title=title, page_icon='favicon.jpeg', layout='centered')
 st.title(title)
+# iframeで埋め込みにして残りは非表示
+st.components.v1.iframe(
+    src="https://hf.space/streamlit/sentencebird/image-color-vectorization/", height=3000)
+st.stop()
+
 uploaded_file = st.file_uploader('Choose an image file')
 if uploaded_file is None: uploaded_file = './sample.jpg'
 
